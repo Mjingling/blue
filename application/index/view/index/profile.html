@@ -1,0 +1,280 @@
+{include file="public/header" /}
+	<link rel="stylesheet" type="text/css" href="{$__RESOURCE__}styles/user.css">
+	<div class="app-body">
+				<!-- 个人资料 -->
+				<form id="user-form" method="post" action="./profile">
+			    <div class="wrap">
+			        <h2 ><i class="icon-user"></i>&nbsp;个人资料</h2>
+			    </div>
+			    <p class="promise-tips">我们保证，绝不会向第三方透露你的资料信息。</p>
+			    <div class="wrap user-profile">
+			        <div class="user-info">
+			            <ul>
+			                <li class="user-name">
+			                    <div class="uname-box">
+			                        <label>*你的姓名</label>
+			                        <span class="ui-input">
+			                            <input autocomplete="off" type="text" class="order-username" name="mainname" value="">
+			                            <a href="javascript:;" class="ui-input-clear icon-fail-fill"></a>
+			                        </span>
+			                    </div>
+			                    <div class="uname-sex">
+			                        <label>*你的性别</label>
+			                                                <input type="hidden" name="mainsex" value="male">
+			                                                <a data-sex="female" href="javascript:;">女士</a>
+			                        <a class="active" data-sex="male" href="javascript:;">先生</a>
+			                    </div>
+			                </li>
+			                <li class="user-tel">
+			                    <div class="utel-box">
+			                        <label>*你的手机号码</label>
+			                        <span class="ui-input">
+			                            <input autocomplete="off" type="number" maxlength="11" class="order-telphone" name="mainphone" tel="" value="">
+			                            <a href="javascript:;" class="ui-input-clear icon-remove"></a>
+			                        </span>
+			                        <a href="javascript:;" class="ut-getcode ut-getcode-disable">获取验证码</a>
+			                    </div>
+			                    <div class="utel-code">
+			                        <label>*验证码</label>
+			                        <span class="ui-input">
+			                            <input autocomplete="off" maxlength="4" placeholder="4位数字" type="number" class="order-telcode" name="maincode" value="">
+			                            <a href="javascript:;" class="ui-input-clear icon-fail-fill"></a>
+			                        </span>
+			                    </div>
+			                </li>
+			                <li class="user-email">
+			                    <label>*你的常用电子邮箱</label>
+			                    <span class="ui-input">
+			                        <input autocomplete="off" class="order-mail" type="text" name="mainemail" value="">
+			                        <a href="javascript:;" class="ui-input-clear icon-fail-fill"></a>
+			                    </span>
+			                </li>
+			            </ul>
+			        </div>
+			    </div>
+					<!-- 保存成功提示 -->
+			    <div class="nb-dialog save-success" id="dialog-success">
+			        <div class="mask"></div>
+			        <div class="dialog-box">
+			            <i class="icon-ok"></i>
+			            <p>保存成功</p>
+			        </div>
+			    </div>
+					<!-- /保存成功提示 -->
+			    <div class="action user-profile-btn">
+			        <a href="javascript:history.back();" class="nb-btn nb-btn-default">取&nbsp;&nbsp;消</a>
+			        <a href="javascript:;" id="save-profile" class="nb-btn nb-btn-disable">保存</a>
+			    </div>
+	</form>
+				<!-- 个人资料 -->
+	    </div>
+
+			<!--/当前页面的js-->
+		<script>
+		    // input获得焦点时显示删除按钮
+		    (function(){
+		        $('.ui-input').find('input').click(function(e){
+		            $('.ui-input-active').removeClass('ui-input-active');
+
+		            if($(this).parents('.utel-box').size() > 0){
+		                $(this).parents('.utel-box').addClass('utel-box-active');
+		            } else {
+		                $('.utel-box-active').removeClass('utel-box-active');
+		                $(this).parent().addClass('ui-input-active');
+		            }
+		            e.stopPropagation();
+		        }).end().find('.ui-input-clear').click(function(e){
+		            $(this).parent().addClass('ui-input-active').find('input').val('');
+		            $(this).parents('.utel-code').removeClass('ui-input-success');
+		            if($('#order-coupon input').size() > 0){
+		                $('#order-coupon input').keyup();
+		            }
+		            e.stopPropagation();
+		        });
+		        $('body').click(function(){
+		            $('.ui-input-active').each(function(){
+		                $(this).removeClass('ui-input-active');
+		            })
+		        })
+		    })();
+
+		    // 手机号码校验
+		    $('.order-telphone').bind('input', function(){
+		        var tel = $.trim($(this).val());
+
+		        if(tel.length == 11){
+		            $(this).parents('.ui-input-error').removeClass('ui-input-error');
+		        }
+		    });
+
+		    // 选择性别
+		    $('.user-info .uname-sex a').click(function(){
+		        var el = $(this);
+		        el.parent().find('.active').removeClass('active');
+		        el.addClass('active');
+		        el.parent().find('input').val(el.data('sex'));
+		    });
+		    // 显示手机验证码
+		    (function(){
+		        var canSendCode = false;
+		        // 验证码倒计时
+		        var countDown = function(el, callback){
+		            var count = el.data('countdown');
+		            var timer = setInterval(function(){
+		                if(count <= 1){
+		                    clearInterval(timer);
+		                    callback();
+		                }else{
+		                    el.removeData('countdown');
+		                    el.html('重新获取('+ count +')');
+		                    count--;
+		                }
+		            }, 1000);
+		        }
+
+		        $('.user-tel .utel-box')
+		                .find('input').bind('input', function(){
+		                    var el = $(this);
+		                    el.val(el.val().replace(/[^\d]/g, ''));
+		                    var originPhone = el.attr('tel');
+		                    var phone = el.val();
+		                    if(phone.length == 11){
+		                        // 修改了手机号或者以前没有输入过手机号时需要验证
+		                        if(originPhone == '' || phone != originPhone){
+		                            canSendCode = true;
+		                            el.parents('.user-tel').find('.utel-code')
+		                                    .removeClass('ui-input-success')
+		                                    .removeClass('ui-input-error');
+		                            el.parents('.utel-box').find('.ut-getcode').removeClass('ut-getcode-disable');
+		                            el.parents('.user-tel').find('.utel-code').show();
+		                        } else {
+		                            canSendCode = false;
+		                            el.parents('.utel-box').find('.ut-getcode').addClass('ut-getcode-disable');
+		                            el.parents('.user-tel').find('.utel-code').hide();
+		                        }
+		                    }
+		                }).keyup()
+		                .end().find('.ut-getcode').click(function(){
+		                    var el = $(this);
+		                    var tel = el.parent().find('input').val();
+		                    if(tel.length === 11 && canSendCode){
+		                        canSendCode = false;
+		                        el.addClass('ut-getcode-disable');
+		                        $.get('./api/getcode?type=VALIDATETEL&tel='+ tel, function(data){
+		                            if(data.error){
+		                                canSendCode = true;
+		                                customAlert('error', data.msg, '好');
+		                            }else{
+		                                el.data('countdown', 60);
+		                                countDown(el, function(){
+		                                    el.html('获取验证码');
+		                                    canSendCode = true;
+		                                });
+		                            }
+		                        });
+		                    }
+		                });
+
+		        // 校验验证码
+		        $('.utel-code input').bind('input', function(){
+		            var el = $(this);
+		            var code = el.val();
+		            var tel = el.parents('.user-tel').find('.utel-box input').val();
+		            if(code.length == 4){
+		                $.get('./api/validatecode?type=VALIDATETEL&tel='+ tel +'&code='+ code, function(data){
+		                    if(data.error){
+		                        el.parents('.utel-code').removeClass('ui-input-success').addClass('ui-input-error');
+		                    }else{
+		                        el.parents('.utel-code').removeClass('ui-input-error').addClass('ui-input-success');
+		                    }
+		                });
+		            }
+		        });
+		    })();
+
+		    $('#user-form').on('change', 'input', function() {
+		        if ($(this).val() != '') {
+		            $('#save-profile').removeClass('nb-btn-disable');
+		            $('#save-profile').addClass('nb-btn-primary');
+		        } else {
+		            $('#save-profile').removeClass('nb-btn-primary');
+		            $('#save-profile').addClass('nb-btn-disable');
+		        }
+		    });
+
+		    function hasError(){
+		        var hasError = false;
+		        $('.user-info').each(function(){
+		            var name = $(this).find('.order-username').val();
+		            var originPhone = $(this).find('.order-telphone').attr('tel');
+		            var phone = $(this).find('.order-telphone').val();
+		            var code = $(this).find('.order-telcode').val();
+		            var email = $(this).find('.order-mail').val();
+
+		            if(name == ''){
+		                hasError = true;
+		                $(this).find('.order-username').focus();
+		                $(this).find('.uname-box').addClass('ui-input-error');
+		                return false;
+		            }else{
+		                $(this).find('.uname-box').removeClass('ui-input-error');
+		            }
+
+		            if(phone.length != 11){
+		                hasError = true;
+		                $(this).find('.order-telphone').focus();
+		                $(this).find('.utel-box').addClass('ui-input-error');
+		                return false;
+		            }else{
+		                $(this).find('.utel-box').removeClass('ui-input-error');
+
+		                // 校验验证码
+		                if(!originPhone || originPhone == '' || originPhone != phone ){
+		                    if(!$(this).find('.utel-code').hasClass('ui-input-success')){
+		                        hasError = true;
+		                        $(this).find('.order-code').focus();
+		                        $(this).find('.utel-code').addClass('ui-input-error');
+		                        return false;
+		                    }
+		                }
+		            }
+
+		            ﻿if(email == '' || !/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/.test(email)){
+		                hasError = true;
+		                $(this).find('.order-email').focus();
+		                $(this).find('.user-email').addClass('ui-input-error');
+		                return false;
+		            }else{
+		                $(this).find('.user-email').removeClass('ui-input-error');
+		            }
+		        });
+		        return hasError;
+		    }
+
+		    $('.user-info').last().find('.order-mail').blur(function(){
+		        if(!hasError()){
+		            $('#confirm-order').removeClass('order-confirm-disable');
+		        }else{
+		            $('#confirm-order').addClass('order-confirm-disable');
+		        }
+		    }).each(function(){
+		        if(/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/.test($(this).val())){
+		            $(this).focus().blur();
+		        }
+		    });
+
+		    $('#save-profile').click(function(){
+		        if(!hasError()){
+		            //保存失败显示提示
+								//customAlert('error', result.msg, '好');
+
+								//保存成功 跳转
+								$('#dialog-success').show();
+								setTimeout(function(){
+										 location.href = './city';
+								}, 2000);
+		        }
+		    });
+		</script>
+		<!--user.js  -->
+{include file="public/footer" /}

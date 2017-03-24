@@ -1,0 +1,386 @@
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    -webkit-text-size-adjust: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+  }
+
+  body {
+    font: 12px/1.5 &#039;
+    PingFang SC&#039;
+    ,
+    Arial,
+    sans-serif;
+    color: #888;
+    background: #fff;
+    min-width: 320px;
+    padding: 12px 0;
+  }
+
+  img {
+    border: 0;
+    max-width: 100%;
+  }
+
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+
+  ol,
+  ul {
+    list-style: none;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-size: 100%;
+    font-weight: normal;
+  }
+
+  b,
+  i {
+    font-style: normal;
+    font-weight: normal;
+  }
+
+  a {
+    text-decoration: none;
+    color: #000;
+  }
+
+  .clearfix:after {
+    content: &#039;
+    &#039;
+    ;
+    display: block;
+    clear: both
+  }
+
+  .top {
+    margin: 16px 16px 0;
+    background: #0033cc;
+    color: #B2C7EA;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+    padding: 16px 0;
+    border-radius: 6px;
+  }
+
+  .head {
+    padding: 15px 16px;
+    font-size: 12px;
+    color: #c8c8c8;
+    border-bottom: #E6E6E6 1px solid;
+  }
+
+  h2 {
+    padding: 0 16px;
+    font-weight: 700;
+  }
+
+  h4 {
+    padding: 0 16px;
+    font-size: 11px;
+  }
+
+  .box {
+    padding: 15px 16px 10px;
+  }
+
+  .box .pic {
+    float: left;
+    width: 45%;
+  }
+
+  .box .pic img {
+    width: 100%;
+    vertical-align: top;
+  }
+
+  .box dl {
+    float: left;
+    width: 55%;
+  }
+
+  .box dt {
+    padding: 0 0 0 6px;
+    line-height: 1;
+    font-weight: 700;
+  }
+
+  .box dd {
+    padding: 10px 0 0 6px;
+    font-size: 11px;
+    line-height: 13px;
+    text-align: justify;
+  }
+
+  .box-right dt {
+    padding: 0 6px 0 0;
+    text-align: right;
+  }
+
+  .box-right dd {
+    padding: 10px 6px 0 0;
+  }
+
+  .piclist {
+    padding: 0 0 0px;
+  }
+
+  .piclist ul {
+    padding: 0 12px;
+  }
+
+  .piclist li {
+    text-align: center;
+    font-size: 11px;
+    float: left;
+    width: 33.33%;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    padding: 0 4px;
+  }
+
+  .piclist li img {
+    width: 100%;
+    vertical-align: top;
+  }
+
+  .piclist li i {
+    display: block;
+    font-size: 11px;
+    text-align: center;
+    padding: 6px 0 0;
+    line-height: 1;
+  }
+
+  .colorlist {
+    padding: 0 16px 12px;
+  }
+
+  .colorlist ul {
+    margin: 0 -10px;
+  }
+
+  .colorlist li {
+    float: left;
+    width: 20%;
+    font-size: 11px;
+    text-align: center;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    padding: 12px 10px 0;
+  }
+
+  .colorlist li span {
+    display: block;
+    padding: 100% 0 0;
+  }
+
+  .colorlist li span.color-1 {
+    background: #A4B8E4;
+  }
+
+  .colorlist li span.color-2 {
+    background: #F7E2E5;
+  }
+
+  .colorlist li span.color-3 {
+    background: #5E6D72;
+  }
+
+  .colorlist li span.color-4 {
+    background: #A8AA9D;
+  }
+
+  .colorlist li span.color-5 {
+    background: #9A5151;
+  }
+
+  .colorlist li span.color-6 {
+    background: #D99B60;
+  }
+
+  .colorlist li span.color-7 {
+    background: #D486A0;
+  }
+
+  .colorlist li span.color-8 {
+    background: #8E67AA;
+  }
+
+  .colorlist li span.color-9 {
+    background: #037482;
+  }
+
+  .colorlist li span.color-10 {
+    background: #284556;
+  }
+
+  .colorlist li i {
+    display: block;
+    font-size: 11px;
+    padding: 1px 0 0;
+  }
+
+  .data {
+    font-size: 11px;
+    padding: 0 16px 16px;
+  }
+
+  .data table {
+    width: 100%;
+    text-align: center;
+  }
+
+  .data th {
+    border: #E5E5E5 1px solid;
+    padding: 6px 0;
+    font-weight: 700;
+  }
+
+  .data td {
+    border: #E5E5E5 1px solid;
+    padding: 6px 0;
+  }
+
+  .works {
+    width: 100%;
+    padding: 0 16px;
+    text-align: center;
+  }
+
+  .works img {
+    max-width: 960px;
+    vertical-align: top;
+  }
+</style>
+<div class="top">留下真诚可靠的第一印象,
+  <br>证明你在企业里的不可替代。</div>
+<h2>拍摄案例</h2>
+<div class="works"><img src="{$__RESOURCE__}images/example.jpg"/> </div>
+<div class="head">本页所用图片均为绿草地客户授权使用，侵权必究。</div>
+<h2>服务展示</h2>
+<div class="box clearfix">
+  <div class="pic"><img src="{$__RESOURCE__}images/service/service1.jpg"/>  &nbsp; &nbsp;</div>
+  <dl><dt>前台接待</dt>
+    <dd>前台客服会询问你的证件照用途，帮你选择合适的底色和尺寸。</dd>
+  </dl>
+</div>
+<div class="box box-right clearfix">
+  <dl><dt>化妆造型</dt>
+    <dd>专业化妆师会根据你的气质和职业属性量身定做妆容和发型，让形容得到提升。</dd>
+  </dl>
+  <div class="pic"><img src="{$__RESOURCE__}images/service/service2.jpg" /> &nbsp; &nbsp;</div>
+</div>
+<div class="piclist">
+  <ul class="clearfix">
+    <li><img src="{$__RESOURCE__}images/service/service3.jpg" /> &nbsp;专属化妆套件</li>
+    <li><img src="{$__RESOURCE__}images/service/service4.jpg" /> &nbsp;专业彩妆用品</li>
+    <li><img src="{$__RESOURCE__}images/service/service5.jpg" /> &nbsp;衣物贴心保护</li>
+  </ul>
+</div>
+<div class="box clearfix">
+  <div class="pic"><img src="{$__RESOURCE__}images/service/service6.jpg" /> &nbsp; &nbsp;</div>
+  <dl><dt>服饰搭配</dt>
+    <dd>可提供部分正装，建议你自带服装和配饰(更合身效果更好)，店内也有部分配饰可供选择。</dd>
+  </dl>
+</div>
+<div class="piclist">
+  <ul class="clearfix">
+    <li><img src="{$__RESOURCE__}images/service/service7.jpg" /> &nbsp;领带</li>
+    <li><img src="{$__RESOURCE__}images/service/service8.jpg" /> &nbsp;领结</li>
+    <li><img src="{$__RESOURCE__}images/service/service9.jpg" /> &nbsp;眼镜框</li>
+  </ul>
+</div>
+<h2>自带服装推荐颜色</h2>
+<h4>建议选用纯色的衣服(不要太鲜艳)，推荐以下颜色：</h4>
+<div class="colorlist">
+  <ul class="clearfix">
+    <li><span class="color-1"> </span> &nbsp;浅蓝</li>
+    <li><span class="color-2"> </span> &nbsp;浅粉</li>
+    <li><span class="color-3"> </span> &nbsp;雅灰</li>
+    <li><span class="color-4"> </span> &nbsp;卡其</li>
+    <li><span class="color-5"> </span> &nbsp;酒红</li>
+    <li><span class="color-6"> </span> &nbsp;橡木黄</li>
+    <li><span class="color-7"> </span> &nbsp;玫瑰粉</li>
+    <li><span class="color-8"> </span> &nbsp;淡紫</li>
+    <li><span class="color-9"> </span> &nbsp;蓝绿</li>
+    <li><span class="color-10"> </span> &nbsp;蓝灰</li>
+  </ul>
+</div>
+<div class="box box-right clearfix">
+  <dl><dt>专业拍摄</dt>
+    <dd>专业摄影师会协助调整面部神态和姿势，提升精神面貌和抓也形象。请在拍摄过程中与摄影师保持交流。</dd>
+  </dl>
+  <div class="pic"><img src="{$__RESOURCE__}images/service/service10.jpg" style="vertical-align: top; width: 382.938px; line-height: 22.8571px; white-space: normal;"> &nbsp; &nbsp;</div>
+</div>
+<div class="box clearfix">
+  <div class="pic"><img src="{$__RESOURCE__}images/service/service11.jpg" />  &nbsp; &nbsp;</div>
+  <dl><dt>后期修片</dt>
+    <dd>资深修图师会对照片进行较色和精修，皮肤上的小瑕疵、色斑、暗疮都会去除。你也可以提前提出自己的个性化要求。</dd>
+  </dl>
+</div>
+<div class="box box-right clearfix">
+  <dl><dt>冲印裁切</dt>
+    <dd>600dpi高精度冲印，进口专业相纸，一丝不苟的裁切，确保照片细节的完美呈现。</dd>
+  </dl>
+  <div class="pic"><img src="{$__RESOURCE__}images/service/service12.jpg" />  &nbsp; &nbsp;</div>
+</div>
+<div class="data">
+  <table>
+    <tbody>
+      <tr>
+        <th colspan="9" style="text-align:center">不同尺寸冲印一版可裁切的照片数量</th>
+      </tr>
+      <tr>
+        <td>一寸</td>
+        <td>二寸</td>
+        <td>登记</td>
+        <td>美签</td>
+        <td>日签</td>
+        <td>欧签</td>
+        <td>身份证</td>
+        <td>护照</td>
+        <td>驾照</td>
+      </tr>
+      <tr>
+        <td>10张</td>
+        <td>6张</td>
+        <td>4张</td>
+        <td>2张</td>
+        <td>4张</td>
+        <td>6张</td>
+        <td>10张</td>
+        <td>6张</td>
+        <td>10张</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="box clearfix">
+  <div class="pic"><img src="{$__RESOURCE__}images/service/service13.jpg" /> &nbsp; &nbsp;</div>
+  <dl><dt>送达你手中</dt>
+    <dd>确认照片后约一刻钟，照片会装袋并送呈到你手中。赶快拍照发朋友圈和微博吧~</dd>
+  </dl>
+</div>
+<div class="box box-right clearfix">
+  <dl><dt>咖啡吧</dt>
+    <dd>等待无聊？不如到"SIMPL简直"点一杯饮料，还可以顺便搭讪咖啡小哥~</dd>
+  </dl>
+  <div class="pic"><img src="{$__RESOURCE__}images/service/service14.jpg" /> &nbsp; &nbsp;</div>
+</div>

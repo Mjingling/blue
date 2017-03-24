@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Expires" content="0" />
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<title>网上预约|绿草地</title>
+  <base href="{$__REQUEST__}" />
+	<script src="{$__RESOURCE__}scripts/jquery-1.9.0.min.js"></script>
+	<!-- <script src="{$__RESOURCE__}scripts/zepto.min.js"></script> -->
+	<script src="{$__RESOURCE__}scripts/APP.js"></script>
+	<link rel="icon" href="{$__RESOURCE__}images/logo.png" sizes="16x16">
+	<link rel="stylesheet" type="text/css" href="{$__RESOURCE__}bs/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="{$__RESOURCE__}bs/css/font-awesome-ie7.min.css">
+	<link rel="stylesheet" type="text/css" href="{$__RESOURCE__}styles/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="{$__RESOURCE__}styles/common2.css">
+<script>
+//初始化应用
+     APP.init();
+</script>
+</head>
+<body>
+  <!-- 警告框 -->
+	<div id="alert-dialog" class="alert-dialog" style="display: none;">
+			<div class="alert-box">
+					<a href="javascript:$('#alert-dialog').hide();" class="close icon-remove"></a>
+					<div class="alert-header">
+							<i class="icon-warning"></i>
+					</div>
+					<div class="alert-content">
+					</div>
+					<div class="alert-footer">
+							<a href="javascript:void(0)" class="action-btn">好</a>
+					</div>
+			</div>
+			<div class="mask"></div>
+</div>
+<!-- 警告框 -->
+<div class="app">
+   <!-- 页面标题 -->
+    <div class="toolbar">
+        <div class="toolbar-logo"><img src="{$__RESOURCE__}images/blue.png"></div>
+        <div class="toolbar-menu" id="toolbar-menu"><a href="javascript:void(0)" class="icon-reorder"></a></div>
+        <div class="toolbar-back" id="toolbar-back"><a href="javascript:void(0);"><i class="icon-angle-left"></i>上一步</a></div>
+        <div class="toolbar-location" id="toolbar-location"><a href="javascript:void(0);"><i class="icon-map-marker"></i><strong data-role="location">上海</strong><i data-role="arrow" class="icon-chevron-down"></i></a></div>
+    </div>
+   <!-- /页面标题 -->

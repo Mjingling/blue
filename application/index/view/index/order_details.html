@@ -1,0 +1,303 @@
+{include file="public/header" /}
+	<link rel="stylesheet" type="text/css" href="{$__RESOURCE__}styles/order.css?2.3">
+<div class="app-body">
+  <div class="wrap">
+    <span class="od-back" href="./order_details">订单详情</span>
+    <div class="order-detail">
+      <div class="od-title">
+        <ul>
+          <li>
+            <label>订单编号：</label>
+            <div>C035067334434692277</div>
+          </li>
+          <li>
+            <label>创建时间：</label>
+            <div>2017-03-22 16:07:48</div>
+          </li>
+        </ul>
+        <div class="od-status">
+          <p></p>
+          <span class="order-status order-notpay">待支付</span>
+          <div data-time="28" class="count-down"><span class="num-0"></span><span class="num-0"></span><b class="num-uni3A"></b><span class="num-0"></span><span class="num-2"></span></div>
+        </div>
+      </div>
+      <div class="od-info">
+        <h4>拍摄信息</h4>
+        <ul>
+          <li>
+            <label>姓<span style="opacity:0;">姓名</span>名：</label>
+            <div class="odi-box">&nbsp;&nbsp;</div>
+          </li>
+          <li>
+            <label>联系方式：</label>
+            <div class="odi-box">&nbsp;&nbsp;</div>
+          </li>
+          <li>
+            <label>拍摄日期：</label>
+            <div class="odi-box">
+              2017年3月27日 (周一) 10:30
+            </div>
+          </li>
+          <li class="odi-address">
+            <label>拍摄门店：</label>
+            <div class="odi-box">
+              <p>南京玄武店</p>
+              <a class="icon-store-info1 check-address" href="javascript:;">门店信息</a>
+            </div>
+          </li>
+          <!-- li>
+                        <label>拍摄人数：</label>
+                        <div class="odi-box">1人</div>
+                    </li -->
+        </ul>
+        <ul class="od-products">
+          <li>
+            <label><b>套餐信息</b></label>
+            <div class="odi-box">
+              <table>
+                <tbody>
+                  <tr data-price="">
+                    <th>全身形象照</th>
+                    <td>x1 份</td>
+                  </tr>
+                  <tr>
+                    <th>证件照</th>
+                    <td>x1 份</td>
+                  </tr>
+                </tbody>
+              </table>
+              <em>套餐可至门店更改，以最终拍摄为准</em>
+            </div>
+          </li>
+          <li>
+            <label><b>预计耗时</b></label>
+            <div class="odi-box">
+              <p>约3.5小时</p>
+              <em>时长仅供参考，请预留充足的时间</em>
+            </div>
+          </li>
+        </ul>
+        <ul class="od-price">
+          <li class="odp-total">
+            <b>订单金额</b>
+            <span>￥<b>420</b></span>
+          </li>
+          <li class="odp-deposit od-notpay">
+            <b>需付订金</b>
+            <span>￥<b>60</b></span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="action od-btn" id="orderBtnBox">
+        <a href="javascript:;" id="refund-order" class="od-white">取消订单</a>
+        <a href="javascript:void(0);" class="od-pink" id="order-pay">确认支付</a>
+      </div>
+
+
+    </div>
+  </div>
+  <style>
+    .store-address-dialog {
+      color: #888888;
+      position: fixed;
+    }
+
+    .store-address-dialog .icon-store-info2 {
+      font-size: 48px;
+    }
+
+    .store-address-dialog .dialog-box-header {
+      border-bottom-color: #f3f3f3;
+      margin: 0 15px 10px;
+    }
+
+    .store-address-dialog .dialog-box {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -120px;
+      margin-left: -145px;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .store-address-dialog .dialog-box-content {
+      border-bottom: none;
+      padding: 0 15px;
+    }
+
+    .store-address-dialog .dialog-box-content p {
+      position: relative;
+      padding-left: 22px;
+      margin-bottom: 19px;
+    }
+
+    .store-address-dialog p i {
+      position: absolute;
+      top: 3px;
+      left: 0;
+      width: 12px;
+      height: 12px;
+    }
+
+    .store-address-dialog .desc p {
+      padding: 0;
+      margin: 0;
+    }
+
+    .store-address-dialog a.tela {
+      padding: 7px 14px;
+      border: 1px solid #e4e4e4;
+      border-radius: 3px;
+      color: #888888;
+    }
+
+    .store-address-dialog a.tela:hover {
+      background: #e4e4e4;
+    }
+
+    .store-address-dialog a.tela:active {
+      background-color: #cccccc;
+      border-color: #cccccc;
+      color: #FFFFFF;
+    }
+  </style>
+  <div class="nb-dialog store-address-dialog" style="display: none;">
+    <div class="dialog-box">
+      <div class="dialog-box-header">
+        <p><span class="icon-store-info2"></span></p>
+        <p style="height: 31px;">南京玄武店</p>
+        <a href="javascript:$('.store-address-dialog').hide();" class="icon-remove close"></a>
+      </div>
+      <div class="dialog-box-content list" style="font-size: 12px;">
+        <p><i class="icon-location-gray"></i>江苏省南京市鼓楼区中央路201号金茂汇6楼605</p>
+        <p><i class="icon-phone2"></i><a href="tel:025-52897199" class="tela" style="">025-52897199</a></p>
+        <p><i class="icon-email"></i>njxw@naiveblue.com</p>
+        <p><i class="icon-bus"></i>地铁1号线玄武门站(1号出口)</p>
+      </div>
+      <div class="desc"></div>
+    </div>
+    <div class="mask"></div>
+  </div>
+  <div class="nb-dialog dialog-refund" id="dialog-refund" style="position: fixed;">
+    <div class="mask"></div>
+    <div class="dialog-box">
+      <a href="javascript:;" class="icon-remove close dialog-hide"></a>
+      <h3 class="icon-warning">你正在取消下列订单</h3>
+      <div class="drorder-info">
+        <p>&nbsp;&nbsp;</p>
+        <p>2017年3月27日 (周一) 10:30</p>
+        <p>南京玄武店</p>
+        <div>
+          <span>全身形象照</span>
+          <span>证件照</span> </div>
+        <span class="order-status order-notpay">待支付</span>
+
+      </div>
+      <div class="action dialog-btn">
+        <a href="javascript:;" class="od-white dialog-hide">不取消了</a>
+        <a href="javascript:;" class="od-red" id="refund-order-confirm">取消订单</a>
+      </div>
+    </div>
+  </div>
+  <div id="page-mask" class="page-mask"></div>
+</div>
+<!-- 页面js -->
+<script>
+  // 查看门店
+  $('.check-address').on('click', function() {
+    var el = $('.store-address-dialog');
+    el.css('display', 'block').find('.dialog-box').css({
+      'marginTop': el.find('.dialog-box').height() / 2 * -1
+    });
+  });
+  // 取消支付
+  $('#refund-order').click(function() {
+    var el = $('#dialog-refund').find('.dialog-box');
+    $('#dialog-refund').show().find('.dialog-box').css({
+      marginTop: ($('#dialog-refund').height() - el.height()) / 2
+    });
+  });
+  $('.dialog-hide').click(function() {
+    $('#dialog-refund').hide();
+  });
+
+  var refundStatus = false;
+  //确定取消支付
+  $('#refund-order-confirm').click(function() {
+    if ($(this).hasClass('od-disable'))
+      return;
+
+    if (!refundStatus) {
+      refundStatus = true;
+    }
+  });
+
+  // 倒计时
+  (function() {
+    var timer = null;
+    var addSuff = function(number) {
+      return (number) > 9 ? number.toString() : '0' + number;
+    }
+    var countDown = function() {
+      clearTimeout(timer);
+      $('.count-down').each(function() {
+        var el = $(this);
+        var time = el.data('time');
+        time--;
+        el.data('time', time);
+        if (time == 0) {
+          el.removeClass('count-down').end()
+            .prev('.order-status').removeClass('order-notpay').addClass('order-expired')
+            .html('已过期');
+          el.parents('.order-info').addClass('order-expired');
+        } else {
+          var hours = addSuff(Math.floor(time / (60 * 60))).split('');
+          var minutes = addSuff(Math.floor((time % (60 * 60)) / 60)).split('');
+          var seconds = addSuff((time % 60).toString()).split('');
+          var str = '';
+
+          if (Math.floor(time / (60 * 60)) > 0) {
+            $.each(hours, function(index, num) {
+              str += '<span>'+num+'</span>';
+            });
+            str += '<b>:</b>';
+          }
+          $.each(minutes, function(index, num) {
+            str += '<span>'+num+'</span>';
+          });
+          str += '<b>:</b>';
+
+          $.each(seconds, function(index, num) {
+            str += '<span>'+num+'</span>';
+          });
+
+          el.html(str);
+        }
+      });
+      if ($('.count-down').length > 0) {
+        timer = setTimeout(function() {
+          countDown();
+        }, 1000);
+      }
+    };
+
+    timer = setTimeout(function() {
+      countDown();
+    }, 1000);
+  })();
+</script>
+
+<script>
+  var alipayLoading = false;
+  $('#order-pay').click(function() {
+    if (alipayLoading)
+      return;
+
+    alipayLoading = true;
+    //去支付
+  });
+</script>
+<!-- /页面js -->
+{include file="public/footer" /}

@@ -1,0 +1,86 @@
+{include file="public/header" /}
+<link rel="stylesheet" type="text/css" href="{$__RESOURCE__}styles/order.css?2.0">
+<div class="app-body">
+  <!-- 订单 -->
+  <div class="wrap order-empty">
+    <h2><i class="icon-list"></i>&nbsp;我的订单</h2>
+
+    <!-- 没有订单 -->
+    <div class="om-tips"><i class="icon-no-order"></i>你还没有订单信息</div>
+    <div class="om-btn">
+      <a href="./book">开始预约</a>
+    </div>
+    <!--没有订单  -->
+
+    <!-- 有订单 -->
+    <ul>
+      <li class="order-info  order-notpay">
+        <a href="./order_details">
+          <div class="oi-item"> </div>
+          <div class="oi-item">2017年3月27日 (周一) 10:30</div>
+          <div class="oi-item">南京玄武店 </div>
+          <div class="oi-list">
+            <span>全身形象照</span><span>证件照</span>
+          </div>
+          <div class="oi-status">
+            <span class="order-status order-notpay">待支付</span>
+            <div data-time="1195" class="count-down">
+              <span></span><span ></span><b>:</b><span></span><span></span>
+            </div>
+          </div>
+          <span class="oi-more" href="./order_details">查看订单详情<i class="icon-arrow-right"></i></span>
+        </a>
+      </li>
+    </ul>
+    <!-- /有订单 -->
+
+  </div>
+  <!-- 订单 -->
+</div>
+<script>
+  $('.order-info').each(function() {
+    var cls = $(this).find('.order-status').attr('class');
+    $(this).addClass(cls.replace('order-status', ''));
+  });
+
+  // 倒计时
+  (function() {
+    var timer = null;
+    var addSuff = function(number) {
+      return (number) > 9 ? number.toString() : '0' + number;
+    }
+    var countDown = function() {
+      clearTimeout(timer);
+      $('.count-down').each(function() {
+        var el = $(this);
+        var time = el.data('time');
+        time--;
+        el.data('time', time);
+        if (time == -1) {
+          el.removeClass('count-down').hide();
+          el.parent().find('.order-status').html('已过期')
+            .removeClass('order-notpay').addClass('order-expired');
+          el.parents('.order-info').addClass('order-expired');
+        } else {
+          var minutes = addSuff(Math.floor(time / 60)).split('');
+          var seconds = addSuff((time % 60).toString()).split('');
+          var data = minutes.concat(seconds);
+          el.find('span').each(function(index, element) {
+            //$(element).attr('class', 'num-'+ data[index]);
+            $(element).html(data[index]);
+          });
+        }
+      });
+      if ($('.count-down').length > 0) {
+        timer = setTimeout(function() {
+          countDown();
+        }, 1000);
+      }
+    };
+
+    timer = setTimeout(function() {
+      countDown();
+    }, 1000);
+  })();
+</script>
+{include file="public/footer" /}

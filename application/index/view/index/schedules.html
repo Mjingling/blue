@@ -1,0 +1,644 @@
+{include file="public/header" /}
+<link rel="stylesheet" type="text/css" href="{$__RESOURCE__}styles/schedules_preview.css">
+<link rel="stylesheet" type="text/css" href="{$__RESOURCE__}styles/stores.css">
+<link rel="stylesheet" type="text/css" href="{$__RESOURCE__}styles/schedules.css">
+<div class="app-body">
+
+  <div class="captain wrap clearfix">
+    <span id="store-multi-name" class="store-name">上海玄武店 <i class="icon-arrow-down"></i></span>
+    <span class="check-address"><i class="icon-store-info1"></i>门店信息</span>
+  </div>
+
+  <div class="schedule-selected">
+    <dl>
+      <dt>已选择档期</dt>
+      <dd id="schedule-selected">2017年3月23日(周四)</dd>
+    </dl>
+    <a id="all-schedules" href="javascript:void(0);" class="all-schedules icon-calender">全部档期</a>
+  </div>
+  <div class="flow"><i class="icon-number4"></i><strong>选择时间</strong>
+    <div style="float: right; padding-right: 14px;"><span class="can-book">可预约</span> <span class="fully">已约满</span></div>
+  </div>
+
+  <!-- 时间表 -->
+  <div id="schedules-box" class="schedules-box">
+    <div class="schedules-content clearfix">
+      <div id="standard-schedules" class="standard-schedules clearfix">
+        <!-- 可预订的时间 -->
+        <a data-role="schedule-item" data-time="10:00" class="schedule-item" href="javascript:;">10:00</a>
+        <!-- /可预订的时间 -->
+        <!-- 不可预订的时间 -->
+        <a data-role="schedule-item" data-time="10:30" class="schedule-item disable" href="javascript:;">10:30</a>
+        <!-- /不可预订的时间 -->
+        <!-- 空的时间 -->
+        <a class="schedule-item padding">&nbsp;</a><a class="schedule-item padding">&nbsp;</a>
+        <!-- /空的时间 -->
+        <a data-role="schedule-item" data-time="11:00" class="schedule-item disable" href="javascript:;">11:00</a>
+        <a data-role="schedule-item" data-time="11:30" class="schedule-item " href="javascript:;">11:30</a>
+        <a data-role="schedule-item" data-time="12:00" class="schedule-item disable" href="javascript:;">12:00</a>
+        <a data-role="schedule-item" data-time="13:30" class="schedule-item disable" href="javascript:;">13:30</a>
+        <a data-role="schedule-item" data-time="14:00" class="schedule-item disable" href="javascript:;">14:00</a>
+        <a data-role="schedule-item" data-time="14:30" class="schedule-item disable" href="javascript:;">14:30</a>
+      </div>
+    </div>
+  </div>
+  <!-- 时间表 -->
+  <!-- 时间表正在加载 -->
+  <div id="loadingBox" class="clearfix" style="text-align: center; background-color: rgb(246, 246, 246); display: none;">
+    <br>
+    <br>
+    <br>
+    <br>
+    <span id="loadingText">正在加载时间表.</span>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+  </div>
+  <!-- /时间表正在加载 -->
+
+  <!-- 确认档期弹出框 -->
+  <div class="schedule-confirm" id="schedule-confirm">
+    <div class="confirm-header">
+      <p class="icon"><i class="icon-notice"></i></p>
+      <p>你选择的档期是</p>
+    </div>
+    <div class="confirm-content">
+      <p data-role="date-time" class="date-time"></p>
+      <p data-role="store" class="store"></p>
+      <p>是否确认？</p>
+    </div>
+    <div class="confirm-footer">
+      <a href="javascript:void(0);" data-role="cancel" class="nb-btn nb-btn-default">取消</a>
+      <a href="javascript:void(0);" data-role="ok" class="nb-btn nb-btn-primary">确认</a>
+    </div>
+  </div>
+  <!-- /确认档期弹出框 -->
+  <style>
+    #store-box-open {
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 3;
+      transition: all 0.2s ease-in-out;
+    }
+
+    #store-box-open .store-box {
+      background-color: #FFFFFF;
+      padding-top: 14px;
+      padding-bottom: 4px;
+    }
+
+    #store-box-open .store-list .store-name {
+      text-align: left;
+    }
+
+    .store-box-open-show {
+      top: 84px!important;
+    }
+  </style>
+
+  <!-- 当前城市的可选门店列表 弹出并可以选择门店 -->
+  <div id="store-box-open">
+    <div class="store-box">
+      <ul class="store-list">
+        <li data-store="1" data-city="上海" data-storeid="1" data-productid="" class="">
+          <a href="javascript:;">
+            <div class="status"><i class="can-book"></i><i class="icon-success-fill"></i><i class="icon-full"></i></div>
+            <div class="store-name"><span><strong>上海五角场店</strong></span></div>
+            <div class="store-address-tel">
+              <div class="store-address">上海市杨浦区淞沪路234号创智天地101</div>
+            </div>
+            <!-- <a href="/book/remind?city=上海&productId=&storeId=1"  class="remind"><i class="icon-remind"></i>档期提醒</a>
+                    <div class="arrow"><i class="icon-arrow-right"></i></div> -->
+          </a>
+        </li>
+        <li data-store="2" data-city="上海" data-storeid="2" data-productid="" class="">
+          <a href="javascript:;">
+            <div class="status"><i class="can-book"></i><i class="icon-success-fill"></i><i class="icon-full"></i></div>
+            <div class="store-name"><span><strong>上海虹口店</strong></span></div>
+            <div class="store-address-tel">
+              <div class="store-address">上海市虹口区哈尔滨路159号</div>
+            </div>
+            <!-- <a href="/book/remind?city=上海&productId=&storeId=2"  class="remind"><i class="icon-remind"></i>档期提醒</a>
+                    <div class="arrow"><i class="icon-arrow-right"></i></div> -->
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /当前城市的可选门店列表 弹出并可以选择门店 -->
+  <style>
+    .store-address-dialog {
+      color: #888888;
+      position: fixed;
+    }
+
+    .store-address-dialog .icon-store-info2 {
+      font-size: 48px;
+    }
+
+    .store-address-dialog .dialog-box-header {
+      border-bottom-color: #f3f3f3;
+      margin: 0 15px 10px;
+    }
+
+    .store-address-dialog .dialog-box {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -120px;
+      margin-left: -145px;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .store-address-dialog .dialog-box-content {
+      border-bottom: none;
+      padding: 0 15px;
+    }
+
+    .store-address-dialog .dialog-box-content p {
+      position: relative;
+      padding-left: 22px;
+      margin-bottom: 19px;
+    }
+
+    .store-address-dialog p i {
+      position: absolute;
+      top: 3px;
+      left: 0;
+      width: 12px;
+      height: 12px;
+    }
+
+    .store-address-dialog .desc p {
+      padding: 0;
+      margin: 0;
+    }
+
+    .store-address-dialog a.tela {
+      padding: 7px 14px;
+      border: 1px solid #e4e4e4;
+      border-radius: 3px;
+      color: #888888;
+    }
+
+    .store-address-dialog a.tela:hover {
+      background: #e4e4e4;
+    }
+
+    .store-address-dialog a.tela:active {
+      background-color: #cccccc;
+      border-color: #cccccc;
+      color: #FFFFFF;
+    }
+  </style>
+  <!-- 门店信息弹出框 -->
+  <div class="nb-dialog store-address-dialog" style="display: none;">
+    <div class="dialog-box">
+      <div class="dialog-box-header">
+        <p><span class="icon-store-info2"></span></p>
+        <p style="height: 31px;">南京玄武店</p>
+        <a href="javascript:$('.store-address-dialog').hide();" class="icon-remove close"></a>
+      </div>
+      <div class="dialog-box-content list" style="font-size: 12px;">
+        <p><i class="icon-location-gray"></i>江苏省南京市鼓楼区中央路201号金茂汇6楼605</p>
+        <p><i class="icon-phone2"></i><a href="tel:025-52897199" class="tela" style="">025-52897199</a></p>
+        <p><i class="icon-email"></i>njxw@naiveblue.com</p>
+        <p><i class="icon-bus"></i>地铁1号线玄武门站(1号出口)</p>
+      </div>
+      <div class="desc"></div>
+    </div>
+    <div class="mask"></div>
+  </div>
+  <!-- /门店信息弹出框 -->
+
+  <!-- 当前门店的所有档期 -->
+  <div id="schedules-calender-open" class="schedules-calender-open  schedules-calender-open-show">
+    <ul class="clearfix">
+
+      <!-- 今天 -->
+      <li data-date="2017-03-22" class="schedule-item disable" style="width: 68.4px;">
+        <div class="schedule-date">
+          <span class="month">3月</span>
+          <strong class="day">22</strong>
+        </div>
+        <div class="schedule-weekly">
+          今天
+        </div>
+        <div class="schedule-status"></div>
+      </li>
+      <!-- /今天 -->
+
+      <!-- 最近 -->
+      <li data-role="schedule-date" data-city="上海" data-productid="14" data-date="2017-03-23" class="schedule-item " style="width: 68.4px;">
+        <div class="schedule-date">
+          <span class="month">3月</span>
+          <strong class="day">23</strong>
+        </div>
+        <div class="schedule-weekly">
+          最近
+        </div>
+        <div class="schedule-status"></div>
+      </li>
+      <!-- /最近 -->
+      <!-- 可用档期 -->
+      <li data-role="schedule-date" data-city="上海" data-productid="14" data-date="2017-03-24" class="schedule-item " style="width: 68.4px;">
+        <div class="schedule-date">
+          <span class="month">3月</span>
+          <strong class="day">24</strong>
+        </div>
+        <div class="schedule-weekly">
+          周五
+        </div>
+        <div class="schedule-status"></div>
+      </li>
+      <!-- /可用档期 -->
+
+      <!-- 不可用档期  class 比可用档期多一个  disable-->
+      <li data-role="schedule-date" data-city="上海" data-productid="14" data-date="2017-03-25" class="schedule-item  disable" style="width: 68.4px;">
+        <div class="schedule-date">
+          <span class="month">3月</span>
+          <strong class="day">25</strong>
+        </div>
+        <div class="schedule-weekly">
+          周六
+        </div>
+        <div class="schedule-status"></div>
+      </li>
+      <!-- /不可用档期 -->
+
+       <li data-role="schedule-date" data-city="上海" data-productid="14" data-date="2017-04-05" class="schedule-item " style="width: 68.4px;">
+        <div class="schedule-date">
+          <span class="month">4月</span>
+          <strong class="day">5</strong>
+        </div>
+        <div class="schedule-weekly">
+          周三
+        </div>
+        <div class="schedule-status"></div>
+      </li>
+    </ul>
+    <div class="schedules-calender-open-action">
+      <p>可预约14天内的档期，新一天的档期于每日10:00开放。</p>
+      <!-- <a href="/book/remind?city=上海&productId=14">档期提醒</a> -->
+    </div>
+  </div>
+  <!-- 当前门店的所有档期 -->
+  <div id="page-mask" class="page-mask"></div>
+</div>
+<script type="text/javascript">
+  ///book/combos?storeId=12&isVip=1&date=2017-03-23&time=&productId=14&city=上海
+  var selectDate = '2017-03-23';
+  var activied = '';
+  var hasCombos = '';
+  var scheduleDates = {
+    "latest": 1490198400,
+    "dateList": [{
+      "date": 1490112000,
+      "canOrder": false,
+      "hasSchedule": false,
+      "week": "\u4e09"
+    }, {
+      "date": 1490198400,
+      "canOrder": true,
+      "hasSchedule": true,
+      "week": "\u56db"
+    }, {
+      "date": 1490284800,
+      "canOrder": true,
+      "hasSchedule": true,
+      "week": "\u4e94"
+    }, {
+      "date": 1490371200,
+      "canOrder": true,
+      "hasSchedule": true,
+      "week": "\u516d"
+    }, {
+      "date": 1490457600,
+      "canOrder": true,
+      "hasSchedule": true,
+      "week": "\u65e5"
+    }, {
+      "date": 1490544000,
+      "canOrder": true,
+      "hasSchedule": true,
+      "week": "\u4e00"
+    }, {
+      "date": 1490630400,
+      "canOrder": true,
+      "hasSchedule": true,
+      "week": "\u4e8c"
+    }, {
+      "date": 1490716800,
+      "canOrder": true,
+      "hasSchedule": true,
+      "week": "\u4e09"
+    }, {
+      "date": 1490803200,
+      "canOrder": true,
+      "hasSchedule": true,
+      "week": "\u56db"
+    }, {
+      "date": 1490889600,
+      "canOrder": true,
+      "hasSchedule": true,
+      "week": "\u4e94"
+    }, {
+      "date": 1490976000,
+      "canOrder": true,
+      "hasSchedule": true,
+      "week": "\u516d"
+    }, {
+      "date": 1491062400,
+      "canOrder": true,
+      "hasSchedule": true,
+      "week": "\u65e5"
+    }, {
+      "date": 1491148800,
+      "canOrder": true,
+      "hasSchedule": true,
+      "week": "\u4e00"
+    }, {
+      "date": 1491235200,
+      "canOrder": true,
+      "hasSchedule": false,
+      "week": "\u4e8c"
+    }, {
+      "date": 1491321600,
+      "canOrder": true,
+      "hasSchedule": true,
+      "week": "\u4e09"
+    }]
+  };
+  var weekAry = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+  var city = '上海';
+  var tag = 'default';
+  var productId = '14';
+  var productScreenCount = '1';
+
+  var storeId = '12';
+  var number = '2';
+  (function() {
+    var opw = $('#schedules-calender-open').width();
+    var itemW = opw / 5 - 14;
+    $('#schedules-calender-open li').width(itemW);
+  })();
+  if (!activied) {
+    $('#schedules-calender-open').toggleClass('schedules-calender-open-show');
+  }
+
+  function startLoading() {
+    // List of words to loop on
+    var words = ['正在加载时间表...', '正在加载时间表', '正在加载时间表.', '正在加载时间表..'];
+
+    // Index of the words array
+    var index = 0;
+
+    window.setInterval(function() {
+      $('#loadingText').html(words[index]);
+      // Increment the index modulo the length of words: 0, 1, 2, 0, 1, 2, etc
+      index = (index + 1) % words.length;
+    }, 500);
+  }
+  //显示加载时间表中
+  startLoading();
+
+
+  //创建 时间表条目
+  function buildScheduleItems(o) {
+
+    if (productId == '19') //gifp
+      var allSches = o['gifp'];
+    else
+      var allSches = o['standard'];
+
+    var scheNums = allSches.length;
+
+    var htmlAry = [];
+
+    var titleHtml = '';
+    var contentHtml = '<div class="schedules-content clearfix">';
+
+    htmlAry.push(contentHtml);
+    var scheHtmlArr = ['<div id="standard-schedules" class="standard-schedules clearfix">'];
+
+    padNum = 4 - (scheNums % 4);
+
+    for (var i = 0; i < scheNums + padNum; i++) {
+      var isPadding = allSches[i];
+      if (isPadding) {
+        scheHtmlArr.push(buildScheculeItem(allSches[i].time, (allSches[i].canOrderCount - productScreenCount < 0), false));
+      } else {
+        scheHtmlArr.push(buildScheculeItem(null, null, true));
+      }
+    }
+    scheHtmlArr.push('</div>');
+
+    htmlAry.push(scheHtmlArr.join(''));
+
+    htmlAry.push('</div>');
+    $('.schedules-box').html(htmlAry.join(''));
+  }
+
+
+  //创建时间表条目 参数 时间（11:00）是否可以预定 true|false 是否营业 true|false
+  function buildScheculeItem(time, isDisable, isPadding) {
+    if (isPadding) {
+      return '<a class="schedule-item padding">&nbsp;</a>';
+    } else {
+      var disableClass = '';
+      if (isDisable) {
+        disableClass = 'disable';
+      }
+      return '<a data-role="schedule-item" data-time="' + time + '" class="schedule-item ' + disableClass + '" href="javascript:;">' + time + '</a>';
+    }
+  }
+
+  //获取某个店铺 某个日期的时间表
+  function getStoreSchedulesOnDate(date) {
+    $('#loadingBox').show();
+    $('#schedules-box').hide();
+    $.ajax({
+      'url': '/获取事件表接口',
+      'data': {
+        'tag': tag,
+        'storeId': storeId,
+        'productId': productId,
+        'date': date
+      },
+      'dataType': 'json',
+      'success': function(o) {
+        console.log(o);
+        //显示时间表选择窗口
+        $('#schedules-box').show();
+        //隐藏正在加载框
+        $('#loadingBox').hide();
+        //生成 时间表列表
+        buildScheduleItems(o);
+      }
+    });
+
+    //选中档期选择框中的对应档期
+    setScheduleSelected(date);
+  }
+
+  function getCitySchedulesOnDate(date) {
+    $.ajax({
+      'url': '/api/book/cal-schedule-for-city-on-date',
+      'data': {
+        'tag': tag,
+        'city': city,
+        'productId': productId,
+        'date': date
+      },
+      'dataType': 'json',
+      'success': function(o) {
+        console.log(o);
+        for (var i = 0; i < o.length; i++) {
+          var storeId = o[i].id;
+          var hasSchedules = o[i].hasSchedules;
+          if (hasSchedules) {
+            $('[data-store="' + storeId + '"]').removeClass('disable');
+          } else {
+            $('[data-store="' + storeId + '"]').addClass('disable');
+          }
+        }
+
+      }
+    });
+  }
+
+  function setScheduleSelected(date) {
+    selectDate = date;
+    var dd = new Date(date);
+    var y = dd.getFullYear();
+    var m = dd.getMonth() + 1;
+    var d = dd.getDate();
+    var w = weekAry[dd.getDay()];
+    $('#schedule-selected').html(y + "年" + m + "月" + d + "日(" + w + ")");
+  }
+
+  if (selectDate != '-') {
+    setScheduleSelected(selectDate);
+    getStoreSchedulesOnDate(selectDate);
+  }
+
+
+  //点击全部档期按钮 显示所有档期
+  $('#all-schedules').on('click', function() {
+    $('#schedules-calender-open').toggleClass('schedules-calender-open-show');
+  });
+
+  //点击了某个日期：
+  $(document).on('click', '[data-role="schedule-date"]', function() {
+    if ($(this).hasClass('disable')) {
+      return;
+    }
+    var date = $(this).data('date');
+    getCitySchedulesOnDate(date);
+    getStoreSchedulesOnDate(date);
+    $('[data-role="schedule-date"]').removeClass('activied');
+    $('[data-date="' + date + '"]').addClass('activied');
+    if ($('#schedules-calender-open').hasClass('schedules-calender-open-show')) {
+      $('#schedules-calender-open').removeClass('schedules-calender-open-show');
+    }
+
+    //        window.location.href = '/book/schedules?city=' + city + '&storeId=' + storeId + '&productId='+productId+'&date=' + date;
+  });
+
+  //选择门店 门店被点击
+  $('.store-list').on('click', 'li', function() {
+    if ($(this).hasClass('disable')) {
+      return;
+    }
+    window.location.href = '/book/schedules?city=' + city + '&storeId=' + $(this).data('storeid') + '&productId=' + productId + '&date=' + selectDate;
+  });
+
+
+  //显示确认档期（包括时间和日期）框
+  function showConfirm(time) {
+    var dateTime = $('#schedule-selected').html() + " " + time;
+    var store = '上海玄武店';
+
+    $('#schedule-confirm').find('[data-role="date-time"]').html(dateTime);
+    $('#schedule-confirm').find('[data-role="store"]').html(store);
+    $('#page-mask').show().css('top', 0);
+    $('#schedule-confirm').addClass('schedule-confirm-show');
+    //if (hasCombos) {
+    //    $('#schedule-confirm').find('[data-role="ok"]').attr('href', '/book/combos?storeId='+storeId+'&date='+selectDate+'&time='+time+'&productId='+productId+'&city='+city);
+    //} else {
+    var dd = new Date(selectDate);
+    var week = weekAry[dd.getDay()];
+    //$('#schedule-confirm').find('[data-role="ok"]').attr('href', '/book/order?storeId='+storeId+'&date='+selectDate+'&time='+time+'&productId='+productId+'&tag='+tag+'&city='+city+'&week='+week+'&number='+productScreenCount+'&combos=');
+    $('#schedule-confirm').find('[data-role="ok"]').attr('href', './combos?storeId=' + storeId + '&date=' + selectDate + '&time=' + time + '&productId=' + productId + '&tag=' + tag + '&city=' + city + '&week=' + week + '&number=' + productScreenCount + '&combos=');
+    //}
+
+
+  }
+
+  //时间确认框 点击取消
+  $('#schedule-confirm').on('click', '[data-role="cancel"]', function() {
+    $('#page-mask').hide().css('top', 0);
+    $('#schedule-confirm').removeClass('schedule-confirm-show');
+    $('[data-role="schedule-item"]').removeClass('active');
+  });
+
+  //时间表选择框点击某个时间则显示确认框
+  $('.schedules-box').on('click', '[data-role="schedule-item"]', function() {
+    if ($(this).hasClass('disable') || $(this).hasClass('padding')) {
+      return;
+    }
+
+    var time = $(this).attr('data-time');
+    $('[data-role="schedule-item"]').removeClass('active');
+    $(this).addClass('active');
+
+    showConfirm(time);
+  });
+
+  //选择店铺被点击事件
+  function storeMultiNameClicked() {
+    var arrowElm = $('#store-multi-name').find('i');
+    arrowElm.toggleClass('icon-arrow-down');
+    arrowElm.toggleClass('icon-arrow-up');
+    $('#store-box-open').toggleClass('store-box-open-show');
+    if ($('#page-mask').css('display') == 'none') {
+      $('#page-mask').show().css('top', '84px');
+    } else {
+      $('#page-mask').hide().css('top', 0);
+    }
+  }
+
+  //选择店铺被点击
+  $('#store-multi-name').on('click', function() {
+    storeMultiNameClicked();
+  });
+
+  //门店信息按钮被点击 显示门店信息
+  $('.check-address').on('click', function() {
+    $('.store-address-dialog').toggle();
+    var h = $('.store-address-dialog .dialog-box').height();
+    $('.store-address-dialog .dialog-box').css({
+      'height': h + 'px',
+      'margin-top': -h / 2 + 'px'
+    });
+
+  });
+
+  //选择门店弹出框被点击之后 隐藏自己
+  $('#store-box-open').on('click', function() {
+    if ($(this).hasClass('store-box-open-show')) {
+      var arrowElm = $('#store-multi-name').find('i');
+      arrowElm.addClass('icon-arrow-down');
+      arrowElm.removeClass('icon-arrow-up');
+      $(this).removeClass('store-box-open-show');
+      $('#page-mask').hide().css('top', 0);
+    }
+  });
+</script>
+{include file="public/footer" /}

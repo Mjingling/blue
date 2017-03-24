@@ -1,0 +1,85 @@
+{include file="public/header" /}
+	<link rel="stylesheet" type="text/css" href="{$__RESOURCE__}styles/product_detail.css">
+	<!--页面内容-->
+		 <div class="app-body">
+			<section class="product-section clearfix">
+			    <div class="image-title">
+			        <div class="product-image"><img src="{$__RESOURCE__}images/icon_zhengjian.png"></div>
+			        <div class="product-title">全身形象照</div>
+			    </div>
+			    <div class="price-stores">
+			        <div class="price-box">
+			        <div class="product-cost"><sub>￥</sub>300</div>
+			        </div>
+			        <div class="provide-stores">
+			              <span><i class="icon-success-fill"></i>上海五角场店</span>
+			              <span><i class="icon-success-fill"></i>上海虹口店</span>
+			        </div>
+			    </div>
+			</section>
+
+			<section class="product-section specifics">
+				<dl>
+				<dt><strong>包含项目</strong></dt>
+				<dd>
+				    <ul class="service clearfix">
+				        <li class="service-1">
+				            <i></i>
+				            <span>化妆</span>
+				            <p>1个妆面造型</p>
+				        </li>
+				        <li class="service-2">
+				            <i></i>
+				            <span>拍摄</span>
+				            <p>1种背景颜色</p>
+				        </li>
+				        <li class="service-3">
+				            <i></i>
+				            <span>修图</span>
+				            <p>1张精修底片</p>
+				        </li>
+				        <li class="service-4">
+				            <i></i>
+				            <span>冲印</span>
+				            <p>1张6寸照片</p>
+				        </li>
+				    </ul>
+				    <div style="color: #888;"><strong>服装</strong>：建议自带服装，店内仅提供部分正装和衬衫。</div>
+				</dd>
+				<dd class="clearfix">
+				    <dl>
+				        <dt><strong>预计耗时</strong></dt>
+				        <dd>约<strong>3</strong>小时</dd>
+				    </dl>
+				    <dl>
+				        <dt><strong>看样时间</strong></dt>
+				        <dd><i class="active-i icon-ok"></i>7天邮件看样</dd>
+				    </dl>
+				    <dl>
+				        <dt><strong>取件方式</strong></dt>
+				        <dd><i class="active-i icon-ok"></i>顺丰到付</dd>
+				    </dl>
+				</dd><dt><strong>用途</strong><br>
+				<p>职业照、个人形象展示、求职简历、工作牌、杂志刊登、个人留念等</p>
+				</dt>
+				</dl>
+				<a id="more" class="more" style="display: none;"><span>查看更多详情</span></a>
+			</section>
+
+			<!-- 产品描述开始 -->
+			<div class="product-desc">
+				{include file="public/product_desc" /}
+			</div>
+			<!-- 产品描述结束 -->
+
+
+	    <div class="action">
+	        <a href="javascript:history.back();" class="nb-btn nb-btn-default">重选拍摄类型</a>
+	        <a href="./stores?city=上海&amp;tag=default&amp;productId=14" class="nb-btn nb-btn-primary">下一步</a>
+	    </div>
+
+
+	        <div id="page-mask" class="page-mask"></div>
+	    </div>
+		 <!--/页面内容-->
+{include file="public/footer" /}

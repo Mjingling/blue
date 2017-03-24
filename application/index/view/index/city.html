@@ -1,0 +1,54 @@
+{include file="public/header" /}
+<link rel="stylesheet" type="text/css" href="{$__RESOURCE__}styles/city.css">
+<div class="app-body">
+        <div class="captain wrap">
+        <!-- 没有定位时显示 -->
+        <span class="no-store-tips">抱歉，定位失败。</span>
+        <!-- /没有定位时显示 -->
+        <!-- 有定位时显示 -->
+        <span class="geo-city"><i></i>上海 </span>
+        <!-- /有定位时显示 -->
+    </div>
+<div class="wrap" style="overflow: hidden;">
+    <p style="font-size:12px;color:#888888;line-height:12px;text-align:justify;margin-bottom: 11px;">请选择下列有天真蓝门店的城市</p>
+    <div class="city-list">
+
+        <ul class="clearfix" id="city-all">
+                        <li><a href="./products?city=上海">上海</a></li>
+                        <li><a href="./products?city=深圳">深圳</a></li>
+                        <li><a href="./products?city=北京">北京</a></li>
+                        <li><a href="./products?city=厦门">厦门</a></li>
+                        <li><a href="./products?city=大连">大连</a></li>
+                        <li><a href="./products?city=武汉">武汉</a></li>
+                        <li><a href="./products?city=广州">广州</a></li>
+                        <li><a href="./products?city=南京">南京</a></li>
+                        <li><a href="./products?city=西安">西安</a></li>
+                        <li><a href="./products?city=杭州">杭州</a></li>
+                        <li><a href="./products?city=昆明">昆明</a></li>
+                        <li><a href="./products?city=长沙">长沙</a></li>
+                        <li><a href="./products?city=苏州">苏州</a></li>
+                    </ul>
+        <ul class="clearfix" id="city-search">
+        </ul>
+    </div>
+    <div class="city-list">
+    <p style="font-size:12px;color:#888888;line-height:12px;text-align:justify;margin-bottom: 11px;">更多城市敬请期待</p>
+    <ul class="clearfix">
+        <li><span>成都</span></li>
+        <li><span>青岛</span></li>
+        <li><span>哈尔滨</span></li>
+        <li><span>天津</span></li>
+        <li><span>重庆</span></li>
+        <li><span>郑州</span></li>
+        <li><span>济南</span></li>
+        <li><span>长春</span></li>
+        <li class="dot"><i class="icon-dot"></i><i class="icon-dot"></i><i class="icon-dot"></i></li>
+    </ul>
+</div>
+<div class="tips">
+    天真蓝已在13个城市共开设15家门店，我们正在努力开设更多门店以方便顾客。敬请期待！<br>如果你有店铺及其他资源，欢迎提供给我们，请将详细信息发送至邮箱cs@naiveblue.com，不胜感激！
+</div>
+</div>
+        <div id="page-mask" class="page-mask"></div>
+    </div>
+{include file="public/footer" /}

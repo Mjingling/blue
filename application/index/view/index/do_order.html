@@ -1,0 +1,456 @@
+{include file="public/header" /}
+<link rel="stylesheet" type="text/css" href="{$__RESOURCE__}styles/do_order.css?2.0">
+<div class="app-body">
+  <form id="order-form" method="post" action="/book/order">
+    <input type="hidden" name="productId" value="14">
+    <input type="hidden" name="storeId" value="12">
+    <input type="hidden" name="city" value="上海">
+    <input type="hidden" name="isVip" value="0">
+    <input type="hidden" name="date" value="2017-03-27">
+    <input type="hidden" name="time" value="10:30">
+    <input type="hidden" name="number" value="1">
+    <input type="hidden" name="combos" value="1|1">
+    <input type="hidden" name="price" id="total_price" value="420">
+    <input type="hidden" name="tag" id="tag" value="default">
+
+    <div class="wrap">
+      <div class="order-info">
+        <h4>确认订单</h4>
+        <h5>拍摄信息</h5>
+        <ul>
+          <li class="oi-vip">
+            <label>拍摄日期：</label>
+            <div>2017年3月27日（周一）10:30</div>
+
+          </li>
+
+          <li class="oi-address">
+            <label>拍摄门店：</label>
+            <div>
+              <p>南京玄武店</p>
+            </div>
+          </li>
+
+          <li>
+            <label>预约姓名：</label>
+            <div> （先生）</div>
+          </li>
+          <li>
+            <label>手机号码：</label>
+            <div></div>
+          </li>
+          <li>
+            <label>电子邮箱：</label>
+            <div></div>
+          </li>
+          <!-- li><label>拍摄人数：</label><div>1人</div></li -->
+        </ul>
+
+
+        <ul class="oi-products">
+          <li>
+            <label><b>套餐信息</b></label>
+            <div id="order-products">
+              <table>
+                <tbody>
+                  <tr data-price="300" data-count="1">
+                    <th>全身形象照</th>
+                    <td>x1 份</td>
+                  </tr>
+                  <tr data-price="120.00" data-count="1">
+                    <th>证件照</th>
+                    <td>x1 份</td>
+                  </tr>
+                </tbody>
+              </table>
+              <!-- <em>套餐可至门店更改，以最终拍摄为准</em> -->
+            </div>
+          </li>
+        </ul>
+        <ul class="oi-time">
+          <li>
+            <label><b>预计耗时</b></label>
+            <div>
+              <p>约3.5小时</p>
+              <!-- <em>时长仅供参考，请预留充足的时间</em> -->
+            </div>
+          </li>
+        </ul>
+        <ul class="oi-coupon" id="order-coupon">
+          <li>
+            <label><b>优惠码</b></label>
+            <div>
+              <span class="ui-input">
+                                <input autocomplete="off" maxlength="8" name="coupon" placeholder="" type="text">
+                                <a href="javascript:;" class="ui-input-clear icon-fail-fill"></a>
+                            </span>
+              <p>可不填</p>
+            </div>
+          </li>
+        </ul>
+
+        <ul class="order-info-price">
+          <li><b>订单金额</b><span>￥<b id="price-total">420</b></span></li>
+
+          <li>
+            <b>需付订金</b>
+            <span>
+                            ￥<b id="deposit" data-deposit="0">60</b>
+                        </span>
+          </li>
+        </ul>
+      </div>
+      <div class="order-tips order-tips-active" id="order-tips" style="margin-bottom:6em">
+        <div class="order-tips-n">
+          <!-- <p>请核对订单内容,付款后若取消订单,订金将受损失</p> -->
+          <a href="javascript:;" class="icon-arrow-down open"><span class="icon-warning">查看退款规则</span></a>
+        </div>
+        <div class="order-tips-a" style="padding-bottom:1em">
+          <h6 class="icon-warning">退款规则</h6>
+          <p>·距拍摄时间72小时以上取消订单，退99%订金</p>
+          <p>·距拍摄时间48-72小时取消订单，退50%订金</p>
+          <p>·距拍摄时间不足48小时取消订单，不可退订金</p>
+        </div>
+      </div>
+    </div>
+    <div class="action order-btn">
+      <a href="javascript:history.back();" class="order-back">重选套餐</a>
+      <a href="javascript:void(0);" id="confirm-order" class="order-confirm">确认并支付</a>
+    </div>
+  </form>
+
+  <style>
+    .store-address-dialog {
+      color: #888888;
+      position: fixed;
+    }
+
+    .store-address-dialog .icon-store-info2 {
+      font-size: 48px;
+    }
+
+    .store-address-dialog .dialog-box-header {
+      border-bottom-color: #f3f3f3;
+      margin: 0 15px 10px;
+    }
+
+    .store-address-dialog .dialog-box {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -120px;
+      margin-left: -145px;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .store-address-dialog .dialog-box-content {
+      border-bottom: none;
+      padding: 0 15px;
+    }
+
+    .store-address-dialog .dialog-box-content p {
+      position: relative;
+      padding-left: 22px;
+      margin-bottom: 19px;
+    }
+
+    .store-address-dialog p i {
+      position: absolute;
+      top: 3px;
+      left: 0;
+      width: 12px;
+      height: 12px;
+    }
+
+    .store-address-dialog .desc p {
+      padding: 0;
+      margin: 0;
+    }
+
+    .store-address-dialog a.tela {
+      padding: 7px 14px;
+      border: 1px solid #e4e4e4;
+      border-radius: 3px;
+      color: #888888;
+    }
+
+    .store-address-dialog a.tela:hover {
+      background: #e4e4e4;
+    }
+
+    .store-address-dialog a.tela:active {
+      background-color: #cccccc;
+      border-color: #cccccc;
+      color: #FFFFFF;
+    }
+  </style>
+  <div class="nb-dialog store-address-dialog" style="display: none;">
+    <div class="dialog-box">
+      <div class="dialog-box-header">
+        <p><span class="icon-store-info2"></span></p>
+        <p style="height: 31px;">南京玄武店</p>
+        <a href="javascript:$('.store-address-dialog').hide();" class="icon-close close"></a>
+      </div>
+      <div class="dialog-box-content list" style="font-size: 12px;">
+        <p><i class="icon-location-gray"></i>江苏省南京市鼓楼区中央路201号金茂汇6楼605</p>
+        <p><i class="icon-phone2"></i><a href="tel:025-52897199" class="tela" style="">025-52897199</a></p>
+        <p><i class="icon-email"></i>njxw@naiveblue.com</p>
+        <p><i class="icon-bus"></i>地铁1号线玄武门站(1号出口)</p>
+      </div>
+      <div class="desc"></div>
+    </div>
+    <div class="mask"></div>
+  </div>
+  <div id="page-mask" class="page-mask"></div>
+</div>
+
+<!-- 页面的私有js -->
+<script>
+    var totalPrice = 60;
+    var isVip = 0;
+    //优惠码金额
+    var couponCost = 0;
+
+    // 查看门店
+    $('.check-address').on('click', function() {
+        $('.store-address-dialog').toggle();
+        var h = $('.store-address-dialog .dialog-box').height();
+        $('.store-address-dialog .dialog-box').css({
+            'height': h + 'px',
+            'margin-top': -h/2+'px'
+        });
+    });
+
+    // 展开收起退款规则
+    (function(){
+        $('#order-tips').find('.open').click(function(){
+            $('#order-tips').addClass('order-tips-active');
+        }).end().find('.closed').click(function(){
+            $('#order-tips').removeClass('order-tips-active');
+        })
+    })();
+
+    //计算总价
+    (function(){
+        var totalPrice = 0;
+        $('#order-products tr').each(function(){
+            var price = parseFloat($(this).data('price'), 10);
+            //var VIPPrice = parseFloat($(this).data('vipprice'), 10);
+            price = price * parseInt($(this).data('count'), 10);
+            totalPrice += price;
+        });
+        $('#total_price').val(totalPrice);
+        $('#price-total').html(totalPrice.toFixed(0));
+    })();
+
+    // 验证coupon
+    (function(){
+        var node = $('#order-coupon').find('input');
+        var validateCoupon = function(){
+            var coupon = node.val().replace(/\s/g, '');
+            if(coupon.length == 8){
+                $.get('/api/coupon/validate?code='+ coupon, function(result){
+                    if(result.isValid){
+                        node.parents('.oi-coupon')
+                                .removeClass('oi-coupon-error')
+                                .addClass('oi-coupon-success')
+                                .find('p').css({
+                                    paddingTop: '3px',
+                                    lineHeight: '15px',
+                                    color: '#7CDFA8'
+                                })
+                                .html(result.coupon.partner +'<br>优惠'+ parseFloat(result.coupon.cost, 10).toFixed(0) +'元');
+                        couponCost = parseInt(result.coupon.cost, 10);
+                    }else{
+                        couponCost = 0;
+                        node.parents('.oi-coupon')
+                                .removeClass('oi-coupon-success')
+                                .addClass('oi-coupon-error')
+                                .find('p').css({
+                                    paddingTop: 0,
+                                    lineHeight: '36px',
+                                    color: '#FF8571'
+                                }).html('优惠码无效');
+                    }
+                    var newPrice = (totalPrice - couponCost);
+                    if(newPrice < 0){
+                        newPrice = 0;
+                    }
+                    $('#deposit').html(newPrice.toFixed(0));
+                });
+            }else{
+                if(coupon.length > 0) {
+                    node.parents('.oi-coupon')
+                            .find('p').css({
+                                paddingTop: 0,
+                                lineHeight: '36px',
+                                fontWeight: 100,
+                                color: '#FF8571'
+                            }).html('8位字母数字');
+                } else {
+                    node.parents('.oi-coupon')
+                        .removeClass('oi-coupon-error')
+                        .addClass('oi-coupon-success')
+                        .find('p').html('');
+                }
+                couponCost = 0;
+                var newPrice = (totalPrice - couponCost);
+                if (newPrice < 0) {
+                    newPrice = 0;
+                }
+                $('#deposit').html(newPrice.toFixed(0));
+            }
+        };
+        $('#order-coupon').find('input').bind('input', function(){
+            validateCoupon();
+        }).blur(function(){
+            validateCoupon();
+        })
+    })();
+
+    // input获得焦点时显示删除按钮
+    (function(){
+        $('.ui-input').find('input').click(function(e){
+            $('.ui-input-active').removeClass('ui-input-active');
+
+            if($(this).parents('.utel-box').size() > 0){
+                $(this).parents('.utel-box').addClass('utel-box-active');
+            } else {
+                $('.utel-box-active').removeClass('utel-box-active');
+                $(this).parent().addClass('ui-input-active');
+            }
+            e.stopPropagation();
+        }).end().find('.ui-input-clear').click(function(e){
+            $(this).parent().addClass('ui-input-active').find('input').val('');
+            $(this).parents('.utel-code').removeClass('ui-input-success');
+            console.log($('#order-coupon input'))
+            if($('#order-coupon input').size() > 0){
+                $('#order-coupon input').keyup();
+            }
+            e.stopPropagation();
+        });
+        $('body').click(function(){
+            $('.ui-input-active').each(function(){
+                $(this).removeClass('ui-input-active');
+            })
+        })
+    })();
+    // 邮箱
+    (function(){
+        // 显示推荐邮箱列表
+        var showSuggest = function(el, email){
+            var suffix = ['qq.com', '163.com', '126.com', 'hotmail.com', 'gmail.com', '189.cn'];
+            var list = [];
+            var offset = el.offset();
+            var name = email.split('@').length > 1 ? email.split('@')[1] : null;
+            var node = $('#email-suggest');
+
+            if(node.length == 0){
+                node = $('<div id="email-suggest" />');
+                $('body').append(node);
+                node.on('click', 'a', function(){
+                    if(el.size() > 0){
+                        el.val($(this).html()).focus().blur()
+                                .parents('.user-email').removeClass('ui-input-error');
+                    }
+                    node.hide();
+                })
+            }
+
+            $.each(suffix, function(index, site){
+                if(name && name != ''){
+                    if(site.indexOf(name) > -1){
+                        list.push('<a href="javascript:;">'+ email.split('@')[0] +'@'+ site +'</a>');
+                    }
+                } else {
+                    list.push('<a href="javascript:;">'+ email.split('@')[0] +'@'+ site +'</a>');
+                }
+            });
+            node.css({
+                top: offset.top + offset.height,
+                left: offset.left,
+                width: offset.width
+            }).html(list.join('')).show();
+        }
+        $('.user-email input').bind('input', function(){
+            var email = $(this).val();
+            if(/^(\w)+(\.\w+)*@(\w)*?$/.test(email)){
+                showSuggest($(this), email);
+            }
+        })
+    })();
+
+    var $loadingTimer;
+    function startLoading()
+    {
+        // List of words to loop on
+        var words = ['加载中...','加载中','加载中.', '加载中..'];
+
+        // Index of the words array
+        var index = 0;
+
+        $loadingTimer=window.setInterval(function(){
+          $('#confirm-order').html(words[index]);
+          // Increment the index modulo the length of words: 0, 1, 2, 0, 1, 2, etc
+          index = (index+1) % words.length;
+        }, 500);
+    }
+
+
+
+
+    //var creating = false;
+    $('#confirm-order').on('click',function(){
+        // if(hasError())
+        // {
+        //     alert('出错啦...');
+        //     return;
+        // }
+
+        var postData = $('#order-form').serialize();
+        //if (!creating)
+        if($(this).html()!='确认并支付')
+            return ;
+
+        $(this).addClass('order-confirm-disable');
+        startLoading();
+        //creating = true;
+        $.post('/book/order', postData, function(result){
+            //console.log(result);
+            if(result.error){
+                //creating = false;
+                $('#confirm-order').html('确认并支付').removeClass('order-confirm-disable');
+                if(result.url) {
+					customAlert('error', result.msg, '我的订单', function(){
+						window.location.href = result.url;
+					});
+				}else {
+					customAlert('error', result.msg, '好');
+				}
+            }else
+            {
+				if(result.url) {
+					window.location.href = result.url;
+				}
+                else
+                {
+                    if(result.orderSN)
+					  $('#order-form').attr('action', '/book/order?order_sn='+ result.orderSN).submit();
+                    else
+                    {
+                        customAlert('error', '支付接口通信不畅，请再试一次', '好', function(){
+                            window.location.href='/user/orders?redirect=lastest';
+                        });
+
+
+                    }
+				}
+            }
+        });
+
+
+    });
+</script>
+<!-- /页面的私有js -->
+{include file="public/footer" /}

@@ -1,0 +1,101 @@
+{include file="public/header" /}
+	<link rel="stylesheet" type="text/css" href="{$__RESOURCE__}styles/notice.css">
+<div class="app-body">
+	<!-- 预约 -->
+		<div class="notice-wrap">
+			<h2>欢迎来到绿草地</h2>
+			<div class="content">
+			<dl class="notice-dl">
+					<dt>预约项目说明</dt>
+					<dd>
+							<ul class="intro">
+									<li>预约成功后订单不可更改，如需取消将产生订金损失，退款规则如下：
+											<p style="margin-top:6px;margin-bottom:8px;line-height: 1.4">
+													距拍摄时间72小时以上取消订单，退99%订金<br>
+													距拍摄时间48-72小时取消订单，退50%订金<br>
+													距拍摄时间不足48小时取消订单，不可退订金
+											</p>
+									</li>
+									<li>如未按预定日期到店，订单则视为放弃，订金将不予退还。</li>
+									<li>我们会提供精修后的数码底片，不提供未经处理的原始拍摄文件。</li>
+									<li>除登记照外，暂时仅支持单人预约，如需多人请分别预约。  </li>
+
+							</ul>
+					</dd>
+			</dl>
+
+	</div>
+
+	<div class="action" id="actionBox">
+			<p style="font-size:1.2em;margin-top: 0;padding-top:0;padding-bottom:15px;color:#7CDFA8;">
+					<input type="checkbox" value="1" id="agreeCheckbox">
+					<b id="agreeWrapper" style="font-weight:bold;display: inline-block; background:white;">我同意上述条款</b>
+			</p>
+			<a href="javascript:void(0);" id="goBooking" class="nb-btn nb-btn-disable validateTel">开始预约</a>
+			<a href="./orders" class="nb-btn nb-btn-default">我的订单</a>
+			<h6 style="line-height: 1; color:#f6f6f6;">443469</h6>
+	</div>
+	</div>
+	<!-- /预约 -->
+	</div>
+	<!--/当前页面的js-->
+	<script>
+	    var hasStore = false;
+	    var city = '';
+
+			//是否有未支付订单 若有则提示支付
+			var hasNoPayedOrder=true;
+	    if(hasNoPayedOrder){
+	        customAlert('error', '你有未支付的订单，请先支付', '我的订单', function(){
+	            location.href = './orders';
+	        })
+	    }
+
+			//点击同意协议按钮 点亮开始预约
+	    function decideBtn()
+	    {
+	        setTimeout(function () {
+	          if($('#agreeCheckbox').is(':checked'))
+	              $('#goBooking').removeClass('nb-btn-disable').addClass('nb-btn-primary');
+	          else
+	              $('#goBooking').removeClass('nb-btn-primary').addClass('nb-btn-disable');
+	          }, 100);
+	    }
+			//同意协议则把复选框选中
+	    $('#agreeWrapper').on('click', function() {
+
+	        if($('#agreeCheckbox').is(':checked'))
+	            $('#agreeCheckbox').prop('checked',false).triggerHandler('click');
+	        else
+	            $('#agreeCheckbox').prop('checked',true).triggerHandler('click');
+	        decideBtn();
+	    });
+			//复选框选中
+	    $('#agreeCheckbox').on('click',function(){
+	        decideBtn();
+	    });
+
+			//开始预约按钮被点击
+	    $('#goBooking').on('click', function() {
+					//没点同意则不做操作
+	        if($(this).hasClass('nb-btn-disable'))
+	            return;
+					//如果用户没有手机号信息 则去取手机号
+	        if($(this).hasClass('validateTel'))
+	        {
+	            window.location.href = './profile';
+	        }
+	        else
+	        {
+						//
+	            if (hasStore && (city != '')) {
+	                window.location.href = './products?city=' + city;
+	            } else {
+	                window.location.href = './city?city=' + city;
+	            }
+	        }
+
+
+	    });
+	</script>
+{include file="public/footer" /}
