@@ -16,7 +16,7 @@
     </dl>
     <a id="all-schedules" href="javascript:void(0);" class="all-schedules icon-calender">全部档期</a>
   </div>
-  <div class="flow"><i class="icon-number4"></i><strong>选择时间</strong>
+  <div class="flow"><i class="icon-number">4</i><strong>选择时间</strong>
     <div style="float: right; padding-right: 14px;"><span class="can-book">可预约</span> <span class="fully">已约满</span></div>
   </div>
 
@@ -105,7 +105,8 @@
   <div id="store-box-open">
     <div class="store-box">
       <ul class="store-list">
-        <li data-store="1" data-city="上海" data-storeid="1" data-productid="" class="">
+        <!-- 不可预定的门店 -->
+        <li data-store="1" data-city="上海" data-storeid="1" class="disable">
           <a href="javascript:;">
             <div class="status"><i class="can-book"></i><i class="icon-success-fill"></i><i class="icon-full"></i></div>
             <div class="store-name"><span><strong>上海五角场店</strong></span></div>
@@ -116,7 +117,9 @@
                     <div class="arrow"><i class="icon-arrow-right"></i></div> -->
           </a>
         </li>
-        <li data-store="2" data-city="上海" data-storeid="2" data-productid="" class="">
+        <!-- 不可预定的门店 -->
+        <!-- 可预定的门店 -->
+        <li data-store="2" data-city="上海" data-storeid="2">
           <a href="javascript:;">
             <div class="status"><i class="can-book"></i><i class="icon-success-fill"></i><i class="icon-full"></i></div>
             <div class="store-name"><span><strong>上海虹口店</strong></span></div>
@@ -127,6 +130,7 @@
                     <div class="arrow"><i class="icon-arrow-right"></i></div> -->
           </a>
         </li>
+        <!-- 可预定的门店 -->
       </ul>
     </div>
   </div>
@@ -292,113 +296,20 @@
   <div id="page-mask" class="page-mask"></div>
 </div>
 <script type="text/javascript">
-  ///book/combos?storeId=12&isVip=1&date=2017-03-23&time=&productId=14&city=上海
-  var selectDate = '2017-03-23';
-  var activied = '';
-  var hasCombos = '';
-  var scheduleDates = {
-    "latest": 1490198400,
-    "dateList": [{
-      "date": 1490112000,
-      "canOrder": false,
-      "hasSchedule": false,
-      "week": "\u4e09"
-    }, {
-      "date": 1490198400,
-      "canOrder": true,
-      "hasSchedule": true,
-      "week": "\u56db"
-    }, {
-      "date": 1490284800,
-      "canOrder": true,
-      "hasSchedule": true,
-      "week": "\u4e94"
-    }, {
-      "date": 1490371200,
-      "canOrder": true,
-      "hasSchedule": true,
-      "week": "\u516d"
-    }, {
-      "date": 1490457600,
-      "canOrder": true,
-      "hasSchedule": true,
-      "week": "\u65e5"
-    }, {
-      "date": 1490544000,
-      "canOrder": true,
-      "hasSchedule": true,
-      "week": "\u4e00"
-    }, {
-      "date": 1490630400,
-      "canOrder": true,
-      "hasSchedule": true,
-      "week": "\u4e8c"
-    }, {
-      "date": 1490716800,
-      "canOrder": true,
-      "hasSchedule": true,
-      "week": "\u4e09"
-    }, {
-      "date": 1490803200,
-      "canOrder": true,
-      "hasSchedule": true,
-      "week": "\u56db"
-    }, {
-      "date": 1490889600,
-      "canOrder": true,
-      "hasSchedule": true,
-      "week": "\u4e94"
-    }, {
-      "date": 1490976000,
-      "canOrder": true,
-      "hasSchedule": true,
-      "week": "\u516d"
-    }, {
-      "date": 1491062400,
-      "canOrder": true,
-      "hasSchedule": true,
-      "week": "\u65e5"
-    }, {
-      "date": 1491148800,
-      "canOrder": true,
-      "hasSchedule": true,
-      "week": "\u4e00"
-    }, {
-      "date": 1491235200,
-      "canOrder": true,
-      "hasSchedule": false,
-      "week": "\u4e8c"
-    }, {
-      "date": 1491321600,
-      "canOrder": true,
-      "hasSchedule": true,
-      "week": "\u4e09"
-    }]
-  };
+  //以下变量为 php传递的参数
+  var selectDate = '2017-03-23';//选中的档期
   var weekAry = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
-  var city = '上海';
-  var tag = 'default';
-  var productId = '14';
-  var productScreenCount = '1';
-
-  var storeId = '12';
-  var number = '2';
+  var city = '上海';//当前选择的城市
+  var productId = '14';//选择的产品类型
+  var storeId = '12';//选择的门店
   (function() {
     var opw = $('#schedules-calender-open').width();
     var itemW = opw / 5 - 14;
     $('#schedules-calender-open li').width(itemW);
   })();
-  if (!activied) {
-    $('#schedules-calender-open').toggleClass('schedules-calender-open-show');
-  }
-
   function startLoading() {
-    // List of words to loop on
     var words = ['正在加载时间表...', '正在加载时间表', '正在加载时间表.', '正在加载时间表..'];
-
-    // Index of the words array
     var index = 0;
-
     window.setInterval(function() {
       $('#loadingText').html(words[index]);
       // Increment the index modulo the length of words: 0, 1, 2, 0, 1, 2, etc
@@ -407,20 +318,11 @@
   }
   //显示加载时间表中
   startLoading();
-
-
   //创建 时间表条目
   function buildScheduleItems(o) {
-
-    if (productId == '19') //gifp
-      var allSches = o['gifp'];
-    else
-      var allSches = o['standard'];
-
+    var allSches = o['data'];
     var scheNums = allSches.length;
-
     var htmlAry = [];
-
     var titleHtml = '';
     var contentHtml = '<div class="schedules-content clearfix">';
 
@@ -432,7 +334,7 @@
     for (var i = 0; i < scheNums + padNum; i++) {
       var isPadding = allSches[i];
       if (isPadding) {
-        scheHtmlArr.push(buildScheculeItem(allSches[i].time, (allSches[i].canOrderCount - productScreenCount < 0), false));
+        scheHtmlArr.push(buildScheculeItem(allSches[i].time, (allSches[i].canOrderCount==0), false));
       } else {
         scheHtmlArr.push(buildScheculeItem(null, null, true));
       }
@@ -464,9 +366,8 @@
     $('#loadingBox').show();
     $('#schedules-box').hide();
     $.ajax({
-      'url': '/获取事件表接口',
+      'url': './api/getTimes',
       'data': {
-        'tag': tag,
         'storeId': storeId,
         'productId': productId,
         'date': date
@@ -487,11 +388,12 @@
     setScheduleSelected(date);
   }
 
+
+  //获取该城市所有可用的店铺
   function getCitySchedulesOnDate(date) {
     $.ajax({
       'url': '/api/book/cal-schedule-for-city-on-date',
       'data': {
-        'tag': tag,
         'city': city,
         'productId': productId,
         'date': date
@@ -547,36 +449,29 @@
     if ($('#schedules-calender-open').hasClass('schedules-calender-open-show')) {
       $('#schedules-calender-open').removeClass('schedules-calender-open-show');
     }
+});
 
-    //        window.location.href = '/book/schedules?city=' + city + '&storeId=' + storeId + '&productId='+productId+'&date=' + date;
-  });
-
-  //选择门店 门店被点击
+  //选择门店 门店被点击 刷新页面传递新的门店ID进页面
   $('.store-list').on('click', 'li', function() {
     if ($(this).hasClass('disable')) {
       return;
     }
-    window.location.href = '/book/schedules?city=' + city + '&storeId=' + $(this).data('storeid') + '&productId=' + productId + '&date=' + selectDate;
+    window.location.href = './schedules?city=' + city + '&storeId=' + $(this).data('storeid') + '&productId=' + productId + '&date=' + selectDate;
   });
 
 
   //显示确认档期（包括时间和日期）框
   function showConfirm(time) {
     var dateTime = $('#schedule-selected').html() + " " + time;
-    var store = '上海玄武店';
+    var store = '【新门店的名字】';
 
     $('#schedule-confirm').find('[data-role="date-time"]').html(dateTime);
     $('#schedule-confirm').find('[data-role="store"]').html(store);
     $('#page-mask').show().css('top', 0);
     $('#schedule-confirm').addClass('schedule-confirm-show');
-    //if (hasCombos) {
-    //    $('#schedule-confirm').find('[data-role="ok"]').attr('href', '/book/combos?storeId='+storeId+'&date='+selectDate+'&time='+time+'&productId='+productId+'&city='+city);
-    //} else {
     var dd = new Date(selectDate);
     var week = weekAry[dd.getDay()];
-    //$('#schedule-confirm').find('[data-role="ok"]').attr('href', '/book/order?storeId='+storeId+'&date='+selectDate+'&time='+time+'&productId='+productId+'&tag='+tag+'&city='+city+'&week='+week+'&number='+productScreenCount+'&combos=');
-    $('#schedule-confirm').find('[data-role="ok"]').attr('href', './combos?storeId=' + storeId + '&date=' + selectDate + '&time=' + time + '&productId=' + productId + '&tag=' + tag + '&city=' + city + '&week=' + week + '&number=' + productScreenCount + '&combos=');
-    //}
+    $('#schedule-confirm').find('[data-role="ok"]').attr('href', './combos?storeId=' + storeId + '&date=' + selectDate + '&time=' + time + '&productId=' + productId +  '&city=' + city + '&week=' + week  + '&combos=');
 
 
   }

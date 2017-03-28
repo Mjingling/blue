@@ -28,6 +28,8 @@ Route::rule('stores','index/Index/stores');
 //api
 Route::rule('api/validatecode','api/Api/validatecode');
 Route::rule('api/getcode','api/Api/getcode');
+Route::rule('api/getTimes','api/Api/getTimes');
+Route::rule('api/order','api/Api/order');
 return [
     '__pattern__' => [
         'name' => '\w+',
